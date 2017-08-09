@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © MageKey. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="controller_action_postdispatch_adminhtml_widget_instance_save">
+        <observer name="magekey_widget_instance_save_postdispatch" instance="MageKey\WidgetAjax\Observer\Adminhtml\WidgetInstanceSavePostDispatch" />
+    </event>
+</config>

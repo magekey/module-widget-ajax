@@ -1,0 +1,17 @@
+<?php
+/**
+ * Copyright © MageKey. All rights reserved.
+ */
+
+?>
+<?php
+/**
+ * @var $block \MageKey\WidgetAjax\Block\Widget\AjaxContainer
+ */
+?>
+<span data-mage-init='{
+    "MageKey_WidgetAjax/js/widgetAjax":{
+        "loadUrl": "<?php /* @escapeNotVerified */ echo $block->getLoadUrl() ?>",
+        "hash": "<?php /* @escapeNotVerified */ echo $block->getHash() ?>"
+    }
+}'></span>

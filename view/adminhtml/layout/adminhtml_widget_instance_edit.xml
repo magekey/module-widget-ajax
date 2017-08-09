@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © MageKey. All rights reserved.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="widget_instance_edit_tabs">
+            <block class="MageKey\WidgetAjax\Block\Adminhtml\Widget\Instance\Edit\Tab\Ajax" name="magekey_widget_instance_edit_tab_ajax"/>
+            <action method="addTab">
+                <argument name="name" xsi:type="string">magekey_ajax_section</argument>
+                <argument name="block" xsi:type="string">magekey_widget_instance_edit_tab_ajax</argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>

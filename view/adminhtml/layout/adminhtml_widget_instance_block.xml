@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © MageKey. All rights reserved.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="adminhtml.widget.instance.grid.columnSet">
+            <block class="Magento\Backend\Block\Widget\Grid\Column" as="is_ajax" after="-">
+                <arguments>
+                    <argument name="header" xsi:type="string" translate="true">Is Ajax</argument>
+                    <argument name="index" xsi:type="string">is_ajax</argument>
+                    <argument name="type" xsi:type="string">options</argument>
+                    <argument name="options" xsi:type="options" model="Magento\Config\Model\Config\Source\Yesno"/>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

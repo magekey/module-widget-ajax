@@ -2,19 +2,16 @@
 /**
  * Copyright © MageKey. All rights reserved.
  */
-namespace MageKey\WidgetAjax\Controller\Widget;
+namespace MageKey\WidgetAjax\Controller\Load;
 
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Exception\LocalizedException;
+
 use MageKey\WidgetAjax\Model\WidgetLoader;
+use MageKey\WidgetAjax\Block\Widget\AjaxContainer;
 
 class Ajax extends \Magento\Framework\App\Action\Action
 {
-    /**
-     * @var \Magento\Framework\Encryption\EncryptorInterface
-     */
-    protected $_encryptor;
-
     /**
      * @var WidgetLoader
      */
@@ -22,16 +19,13 @@ class Ajax extends \Magento\Framework\App\Action\Action
 
     /**
      * @param Context $context
-     * @param \Magento\Framework\Encryption\EncryptorInterface $encryptor
      * @param WidgetLoader $widgetLoader
      */
     public function __construct(
         Context $context,
-        \Magento\Framework\Encryption\EncryptorInterface $encryptor,
         WidgetLoader $widgetLoader
     ) {
         parent::__construct($context);
-        $this->_encryptor = $encryptor;
         $this->_widgetLoader = $widgetLoader;
     }
 
@@ -44,18 +38,18 @@ class Ajax extends \Magento\Framework\App\Action\Action
             $hash = $this->getRequest()->getParam('hash');
             if (!$hash) {
                 throw new LocalizedException(
-                    __('Hash should be defined')
+                    __('Widget not found')
                 );
             }
 
-            $widgetId = $this->_encryptor->decrypt($hash);
-            if (!$widgetId) {
+            $this->_view->loadLayout();
+            $ajaxBlock = $this->_view->getLayout()->getBlock($hash);
+            if (!$ajaxBlock || !($ajaxBlock instanceof AjaxContainer)) {
                 throw new LocalizedException(
                     __('Widget not found')
                 );
             }
-            $this->_view->loadLayout();
-            $html = $this->_widgetLoader->load($widgetId);
+            $html = $this->_widgetLoader->render($ajaxBlock->getWidgetId(), $ajaxBlock->getWidgetParameters());
         } catch (\Exception $e) {
             $html = '';
         }

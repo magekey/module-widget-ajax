@@ -4,9 +4,11 @@
  */
 namespace MageKey\WidgetAjax\Plugin;
 
+use MageKey\WidgetAjax\Block\Widget\AjaxContainer;
+
 class WidgetInstance
 {
-    const WIDGET_AJAX_BLOCK = 'MageKey\WidgetAjax\Block\Widget\AjaxContainer';
+    const WIDGET_AJAX_BLOCK = AjaxContainer::class;
 
     /**
      * @var \Magento\Framework\View\FileSystem
@@ -76,11 +78,22 @@ class WidgetInstance
         if (!$subject->getId() && !$subject->isCompleteToCreate() || $templatePath && !is_readable($templateFilename)) {
             return '';
         }
+
+        $arguments = [
+            'template' => $templatePath,
+        ];
+
         $xml = '<body><referenceContainer name="' . $container . '">';
         $hash = $this->mathRandom->getUniqueHash();
-        $xml .= '<block class="' . self::WIDGET_AJAX_BLOCK . '" name="' . $hash . '">';
+        $xml .= '<block class="' . static::WIDGET_AJAX_BLOCK . '" name="' . $hash . '">';
         $xml .= '<arguments>';
+        $xml .= '<argument name="hash" xsi:type="string">' . $hash . '</argument>';
         $xml .= '<argument name="widget_id" xsi:type="string">' . $subject->getId() . '</argument>';
+        $xml .= '<argument name="widget_parameters" xsi:type="array">';
+        foreach ($arguments as $key => $value) {
+            $xml .= '<item name="' . $key . '" xsi:type="string">' . $value . '</item>';
+        }
+        $xml .= '</argument>';
         $xml .= '</arguments>';
         $xml .= '</block></referenceContainer></body>';
 

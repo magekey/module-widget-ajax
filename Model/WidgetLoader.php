@@ -47,12 +47,13 @@ class WidgetLoader
     }
 
     /**
-     * Load widget content
+     * Render widget content
      *
      * @param int $widgetId
+     * @param array $parameters
      * @return string
      */
-    public function load($widgetId)
+    public function render($widgetId, $parameters = [])
     {
         $widget = $this->widgetFactory->create();
         $widget->load($widgetId);
@@ -61,7 +62,7 @@ class WidgetLoader
                 __('Widget not found')
             );
         }
-        $block = $this->generateBlock($widget);
+        $block = $this->generateBlock($widget, $parameters);
         return $block->toHtml();
     }
 
@@ -69,11 +70,12 @@ class WidgetLoader
      * Generate widget block
      *
      * @param \Magento\Widget\Model\Widget\Instance $widget
+     * @param array $parameters
      * @return string
      */
-    public function generateBlock(\Magento\Widget\Model\Widget\Instance $widget)
+    public function generateBlock(\Magento\Widget\Model\Widget\Instance $widget, array $parameters = [])
     {
-        $parameters = $widget->getWidgetParameters();
+        $parameters = array_merge($widget->getWidgetParameters(), $parameters);
         $arguments = [];
         foreach ($parameters as $name => $value) {
             if ($name == 'conditions') {
@@ -88,7 +90,7 @@ class WidgetLoader
                 );
             }
         }
-
+        
         return $this->layout->createBlock(
             $widget->getType(),
             '',

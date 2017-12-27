@@ -6,7 +6,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
     <router id="standard">
-        <route id="magekey" frontName="magekey">
+        <route id="mgk_widget" frontName="mgk_widget">
             <module name="MageKey_WidgetAjax"/>
         </route>
     </router>

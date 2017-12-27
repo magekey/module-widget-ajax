@@ -6,6 +6,7 @@ namespace MageKey\WidgetAjax\Observer\Adminhtml;
 
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
+use Magento\Framework\Exception\LocalizedException;
 
 class WidgetInstanceSavePostDispatch implements ObserverInterface
 {
@@ -39,7 +40,6 @@ class WidgetInstanceSavePostDispatch implements ObserverInterface
                     [$resource->getIdFieldName() . ' = ?' => (int)$widgetInstance->getId()]
                 );
             } catch (\Exception $e) {
-                echo $e;exit;
                 return;
             }
         }
